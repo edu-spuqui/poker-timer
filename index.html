@@ -3,220 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Poker Timer • PSOP</title>
+    <title>Poker Timer • PT-BR</title>
 	<link rel="icon" type="image/png" href="icon.png">
 	<link rel="shortcut icon" href="icon.png">
-	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Teko:wght@600&display=swap" rel="stylesheet">
-    <style>
-        body { 
-            background: #000; color: #fff; 
-            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; 
-            margin: 0; display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; 
-            height: 102vh; overflow-y: auto; 
-        }
-
-        .row { display: flex; align-items: center; justify-content: center; width: 100%; position: relative; }
-
-        .adj-btn { 
-            background: transparent; color: #444; border: none; 
-            font-size: 6vw; cursor: pointer; padding: 0 5vw;
-            transition: opacity 0.3s;
-        }
-        .rolling .adj-btn { opacity: 0; pointer-events: none; }
-
-        #blinds {
-			font-family: 'Teko', sans-serif; 
-			font-size: 16vw; /* You can go even bigger since Teko is narrow */
-			font-weight: 600;
-			text-transform: uppercase;
-			color: #00ff00; 
-			line-height: 1; 
-			min-width: 65vw; 
-			text-align: center;
-		}
-		.timer-container {
-			width: 65vw;
-			display: flex;
-			justify-content: center; /* Centers the container in the row */
-		}
-		#timer {
-			font-family: 'Orbitron', sans-serif;
-			font-size: 22vw;
-			text-align: left; /* Alignment is now fixed to the left */
-			min-width: 58vw;  /* This "locks" the width so it doesn't shrink/grow */
-			display: inline-block;
-		}
-
-        #next { font-size: 4vw; color: #555; font-weight: bold; margin-top: 1vh; }
-
-        .controls { position: absolute; top: 3vh; right: 3vh; }
-
-        .state-btn { 
-            padding: 15px; border: 2px solid #333; 
-            border-radius: 12px; cursor: pointer; font-weight: bold;
-            width: 180px; font-size: 2.2vw; line-height: 1.2;
-            text-align: center; text-transform: uppercase;
-        }
-
-        /* Green for Start and Running */
-        .btn-green { background: #064506; color: #fff; border-color: #00ff00; } 
-        /* Red for Paused */
-        .btn-red { background: #610c0c; color: #fff; border-color: #ff0000; }
-		#wall-clock {
-			position: absolute;
-			top: 3vh;
-			left: 3vh;
-			font-family: 'Orbitron', sans-serif;
-			font-size: 2.2vw; /* Slightly smaller to fit the seconds */
-			font-weight: bold;
-			font-variant-numeric: tabular-nums;
-			color: #999; 
-			letter-spacing: 1px;
-		}
+    <link rel="stylesheet" href="styles.css">
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Teko&family=Mono&display=swap" rel="stylesheet">
+	<style>
     </style>
 </head>
 <body id="mainBody">
-	<div id="wall-clock">00:00:00</div>
 	
-    <div id="next">Próximo nível: -- / --</div>
-
-    <div class="row">
-        <button class="adj-btn" onclick="changeLevel(-1)">◀</button>
-        <div id="blinds">-- / --</div>
-        <button class="adj-btn" onclick="changeLevel(1)">▶</button>
+    <div id="topBar">
+		<span id="wall-clock">00:00:00</span>
+		<button id="config-btn" onclick="showConfig()">⋮</button>
     </div>
 
-    <div class="row">
-        <button class="adj-btn" onclick="adjustTime(-60)">◀</button>
-        <div id="timer">12:00</div>
-        <button class="adj-btn" onclick="adjustTime(60)">▶</button>
-    </div>
-    
-    <div class="controls">
-        <button id="playBtn" class="state-btn btn-green" onclick="toggleTimer()">Iniciar<br>Jogo</button>
-    </div>
+	<div class="control-block">
+		<div id="next">Próximo nível: -- / --</div>
+		<div class="row">
+			<button class="adj-btn" onclick="changeLevel(-1)">◀</button>
+			<div id="blinds">-- / --</div>
+			<button class="adj-btn" onclick="changeLevel(1)">▶</button>
+		</div>
+	</div>
 
+	<div class="control-block">
+		<div class="row">
+			<button class="adj-btn" onclick="adjustTime(-60)">◀</button>
+			<div id="timer">12:00</div>
+			<button class="adj-btn" onclick="adjustTime(60)">▶</button>
+		</div>
+	</div>
+	
+	<button id="playBtn" class="state-btn btn-green" onclick="toggleTimer()">Iniciar<br>Jogo</button>
+	
     <audio id="alarmSound" src="alarm.mp3" preload="auto"></audio>
 
-	<script>
-		const levels = [
-			"5 / 10", "10 / 20", "15 / 30", "20 / 40", "25 / 50", "30 / 60", "40 / 80", "50 / 100", 
-			"Intervalo", "60 / 120", "75 / 150", "100 / 200", "125 / 250", "150 / 300", 
-			"200 / 400", "300 / 600", "400 / 800", "500 / 1K", "1K / 2K", "1.5K / 3K", 
-			"2K / 4K", "3K / 6K", "4K / 8K", "5K / 10K", "7.5K / 15K", "10K / 20K"
-		];
-		
-		let currentLevel = 0;
-		let timeLeft = 12 * 60;
-		let timerId = null;
+<div id="config-overlay">
+    <div class="config-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <h2 style="margin:0; color:#00ff00;">Estrutura do Jogo</h2>
+            <button class="btn-outline" onclick="loadPSOPIntoForm()">Usar Padrão PSOP</button>
+        </div>
+        
+        <div style="display:flex; gap:15px;">
+            <div style="flex:1;">
+                <label>Nível (min)</label>
+                <input type="number" id="input-level-time" value="12">
+            </div>
+            <div style="flex:1;">
+                <label>Intervalo (min)</label>
+                <input type="number" id="input-break-time" value="15">
+            </div>
+        </div>
+        
+        <label style="margin-top:20px; display:block;">Sequência de Blinds / Intervalos</label>
+        <textarea id="input-blinds" placeholder="Ex:&#10;5/10&#10;10/20&#10;Intervalo&#10;..."></textarea>
 
-		function updateDisplay() {
-			const mins = Math.floor(timeLeft / 60);
-			const secs = timeLeft % 60;
-			document.getElementById('timer').innerText = `${mins}:${secs.toString().padStart(2, '0')}`;
-			document.getElementById('blinds').innerText = levels[currentLevel];
-			document.getElementById('next').innerText = "Próximo nível: " + (levels[currentLevel + 1] || "Acabou!");
-			
-			const isBreak = levels[currentLevel] === "Intervalo";
-			document.getElementById('blinds').style.color = isBreak ? "#ffaa00" : "#00ff00";
-			
-			// Visual warning: Turn red when the alarm starts (last 5 seconds)
-			document.getElementById('timer').style.color = timeLeft <= 15 ? "#ff4444" : "#fff";
-		}
+        <div class="config-actions">
+            <button class="btn-secondary" onclick="hideConfig()">Cancelar</button>
+            <button class="btn-primary" onclick="saveAndApplyConfig()">Aplicar e Salvar</button>
+        </div>
+    </div>
+</div>
 
-		function playAlarm() {
-			const audio = document.getElementById('alarmSound');
-			audio.currentTime = 0; // Reset to start in case of back-to-back levels
-			audio.play().catch(() => {
-				// Beep fallback if audio file fails
-				const ctx = new (window.AudioContext || window.webkitAudioContext)();
-				const osc = ctx.createOscillator();
-				const gain = ctx.createGain();
-				osc.connect(gain); gain.connect(ctx.destination);
-				osc.frequency.value = 880;
-				gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1);
-				osc.start(); osc.stop(ctx.currentTime + 1);
-			});
-		}
-
-		function toggleTimer() {
-			const btn = document.getElementById('playBtn');
-			const body = document.getElementById('mainBody');
-
-			if (timerId) {
-				clearInterval(timerId);
-				timerId = null;
-				btn.innerHTML = "Jogo<br>Pausado";
-				btn.className = "state-btn btn-red";
-				body.classList.remove('rolling');
-			} else {
-				btn.innerHTML = "Jogo<br>Rolando";
-				btn.className = "state-btn btn-green";
-				body.classList.add('rolling');
-				timerId = setInterval(() => {
-					// THE TRIGGER LOGIC
-					if (timeLeft === 6) {
-						playAlarm(); // Start 7s audio at 6s remaining
-					}
-
-					if (timeLeft <= 0) {
-						changeLevel(1); // Level flips when timer hits zero
-					} else {
-						timeLeft--;
-					}
-					
-					updateDisplay();
-				}, 1000);
-			}
-			requestWakeLock();
-		}
-
-		function changeLevel(direction) {
-			currentLevel += direction;
-			if (currentLevel < 0) currentLevel = 0;
-			if (currentLevel >= levels.length) currentLevel = levels.length - 1;
-			
-			timeLeft = (levels[currentLevel] === "Intervalo") ? 15 * 60 : 12 * 60;
-			updateDisplay();
-		}
-
-		function adjustTime(seconds) {
-			timeLeft += seconds;
-			if (timeLeft < 0) timeLeft = 0;
-			updateDisplay();
-		}
-
-		let wakeLock = null;
-
-		async function requestWakeLock() {
-		  try {
-			if ('wakeLock' in navigator) {
-			  wakeLock = await navigator.wakeLock.request('screen');
-			  console.log('Screen Wake Lock is active');
-			}
-		  } catch (err) {
-			console.error(`${err.name}, ${err.message}`);
-		  }
-		}		
-
-		function startWallClock() {
-			setInterval(() => {
-				const now = new Date();
-				document.getElementById('wall-clock').innerText = now.toLocaleTimeString('pt-BR', { 
-					hour: '2-digit', 
-					minute: '2-digit', 
-					second: '2-digit' 
-				});
-			}, 1000);
-		}
-
-		// Call it once when the page loads
-		startWallClock();
-
-		if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js'); }
-		
-		updateDisplay();
-	</script>
+<script src="scripts.js" type="text/javascript"></script>
 </body>
 </html>

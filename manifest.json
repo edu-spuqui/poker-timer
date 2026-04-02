@@ -1,8 +1,8 @@
 {
-  "short_name": "PSOP",
-  "name": "Pilarzinho Series of Poker",
+  "short_name": "PokerTimer",
+  "name": "Poker Timer • PT-BR",
   "display": "standalone",
-  "start_url": "./pokertimer.html",
+  "start_url": "./index.html",
   "background_color": "#000000",
   "theme_color": "#000000",
   "icons": [

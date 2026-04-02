@@ -1,0 +1,218 @@
+body { 
+	background: #000;
+	color: #fff; 
+	font-family: Roboto, Helvetica, sans-serif; 
+	margin: 0;
+	display: flex;
+	flex-direction: column; 
+	align-items: center;
+	justify-content: space-between; 
+	height: 100dvh;
+	overflow: hidden;
+}
+
+#topBar {
+	width: calc(100vw - 2vh);
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+#wall-clock {
+	font-family: 'Orbitron', sans-serif;
+	font-size: 3vh;
+	color: #999; 
+	letter-spacing: 1px;
+	min-width: 16vw;
+}
+
+#config-btn {
+    background: transparent;
+    color: #444;
+    border: none;
+    font-size: 5vh;
+    cursor: pointer;
+}
+
+.row { display: flex; align-items: center; justify-content: center; width: 100%; position: relative; }
+
+.adj-btn { 
+background: #222;
+    color: #00ff00;
+    border: 1px solid #333;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.adj-btn:active {
+    background: #00ff00;
+    color: #000;
+}
+
+.rolling .adj-btn { opacity: 0; pointer-events: none; }
+
+/* Container for a cleaner look */
+.control-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    padding: 20px;
+    margin: 10px 0;
+    width: 90vw;
+}
+
+#blinds {
+	font-family: 'Teko', sans-serif; 
+	font-size: 16vw; /* You can go even bigger since Teko is narrow */
+	font-weight: 600;
+	text-transform: uppercase;
+	color: #00ff00; 
+	line-height: 1; 
+	min-width: 65vw; 
+	text-align: center;
+	text-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+    letter-spacing: -2px;
+}
+#timer {
+	font-family: 'Share Tech Mono', monospace;
+	font-size: 24vw; /* Mono fonts usually look a bit smaller, so we bump it up */
+	font-weight: 600;
+	text-transform: uppercase;
+	line-height: 1; 
+	min-width: 65vw; 
+	text-align: center; /* Center works perfectly with Mono fonts! */
+	color: #fff;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+#next { font-size: 4vw; color: #555; font-weight: bold; margin-top: 1vh; }
+
+.state-btn {
+    width: 80vw;
+    height: 12vh;
+    font-size: 4vh;
+    border-radius: 100px; /* Pill shape */
+    margin-bottom: 3vh;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.state-btn { 
+	padding: 15px;
+	border: 2px solid #333; 
+	border-radius: 12px;
+	cursor: pointer;
+	font-weight: bold;
+	width: 180px;
+	font-size: 2.2vw;
+	line-height: 1.2;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+/* Green for Start and Running */
+.btn-green { background: #064506; color: #fff; border-color: #00ff00; }
+
+/* Red for Paused */
+.btn-red { background: #610c0c; color: #fff; border-color: #ff0000; }
+
+
+#config-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.config-card {
+    background: #111;
+    border: 1px solid #333;
+    padding: 30px;
+    border-radius: 20px;
+    width: 80%;
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+.config-card h2 { color: #00ff00; margin-top: 0; }
+.config-card label { margin-top: 15px; color: #999; font-size: 0.9rem; }
+.config-card input, .config-card textarea {
+    background: #222;
+    border: 1px solid #444;
+    color: white;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    font-family: inherit;
+}
+
+.config-card {
+    background: #111;
+    border: 2px solid #333;
+    padding: 25px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    
+    /* NEW: Increase height and use flexbox */
+    height: 85vh; 
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+}
+
+#input-blinds {
+    background: #222;
+    border: 1px solid #444;
+    color: white;
+    padding: 15px;
+    margin-top: 5px;
+    border-radius: 5px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 18px;
+    
+    /* NEW: This forces the textarea to take up all remaining space */
+    flex-grow: 1; 
+    margin-bottom: 20px;
+    resize: none;
+}
+
+/* Button Container for the bottom row */
+.config-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: flex-end; /* Aligns buttons to the right */
+}
+
+.config-card button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.btn-primary { background: #00ff00; color: #000; }
+.btn-secondary { background: #333; color: #ccc; }
+.btn-outline { background: transparent; border: 1px solid #444 !important; color: #999; }
+
+/* The Textarea needs to look like a code editor */
+#input-blinds {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 16px;
+    line-height: 1.4;
+    resize: none; /* Tablet users shouldn't manually resize */
+}
