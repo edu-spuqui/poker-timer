@@ -20,6 +20,7 @@ body {
 	width: calc(100% - 2vh);
 	display: flex;
 	flex-direction: row;
+	align-items: start;
 	justify-content: space-between;
 }
 
@@ -34,8 +35,9 @@ body {
     background: transparent;
     color: #999;
     border: none;
-    font-size: 5vh;
+    font-size: 4vh;
     cursor: pointer;
+	margin-top: -0.5vh;
 }
 
 .row {
@@ -229,7 +231,7 @@ body {
 /* PORTRAIT (Optimized for Width) */
 @media (orientation: portrait) {
     #blinds {
-        font-size: 16vw; /* Switch to width-based */
+        font-size: 22vw; /* Switch to width-based */
         margin-top: 2vh;
     }
 
@@ -238,7 +240,7 @@ body {
     }
 
     #next {
-        font-size: 5vw;
+        font-size: 6vw;
         margin-bottom: 1vh;
     }
 
@@ -246,10 +248,6 @@ body {
         width: 80vw;   /* Make button wider to fit the thumb better */
         height: 8vh;
         font-size: 4vw;
-    }
-    
-    #topBar {
-        padding: 0 3vw;
     }
 }
 
