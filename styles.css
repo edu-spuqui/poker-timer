@@ -1,18 +1,23 @@
 body { 
-	background: #000;
-	color: #fff; 
-	font-family: Roboto, Helvetica, sans-serif; 
-	margin: 0;
-	display: flex;
-	flex-direction: column; 
-	align-items: center;
-	justify-content: space-between; 
-	height: 100dvh;
-	overflow: hidden;
+    background: #000;
+    color: #fff; 
+    font-family: Roboto, Helvetica, sans-serif; 
+    margin: 0;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: space-between; 
+    
+    /* FIX: Use dynamic viewport height */
+    height: 100dvh; 
+    width: 100vw;
+    overflow: hidden;
+    padding: 1vh 0; /* Add a little breathing room top/bottom */
+    box-sizing: border-box;
 }
 
 #topBar {
-	width: calc(100vw - 2vh);
+	width: calc(100% - 2vh);
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -23,22 +28,27 @@ body {
 	font-size: 3vh;
 	color: #999; 
 	letter-spacing: 1px;
-	min-width: 16vw;
 }
 
 #config-btn {
     background: transparent;
-    color: #444;
+    color: #999;
     border: none;
     font-size: 5vh;
     cursor: pointer;
 }
 
-.row { display: flex; align-items: center; justify-content: center; width: 100%; position: relative; }
+.row {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	position: relative;
+}
 
 .adj-btn { 
-background: #222;
-    color: #00ff00;
+	background: #222;
+    color: #0f0;
     border: 1px solid #333;
     border-radius: 50%;
     width: 60px;
@@ -51,11 +61,14 @@ background: #222;
 }
 
 .adj-btn:active {
-    background: #00ff00;
+    background: #0f0;
     color: #000;
 }
 
-.rolling .adj-btn { opacity: 0; pointer-events: none; }
+.rolling .adj-btn {
+	opacity: 0;
+	pointer-events: none;
+}
 
 /* Container for a cleaner look */
 .control-block {
@@ -64,54 +77,50 @@ background: #222;
     align-items: center;
     background: rgba(255, 255, 255, 0.03);
     border-radius: 20px;
-    padding: 20px;
-    margin: 10px 0;
-    width: 90vw;
+    padding: 1vh;
+    width: 92vw;
 }
 
 #blinds {
 	font-family: 'Teko', sans-serif; 
-	font-size: 16vw; /* You can go even bigger since Teko is narrow */
+	font-size: 30vh; /* You can go even bigger since Teko is narrow */
 	font-weight: 600;
 	text-transform: uppercase;
 	color: #00ff00; 
 	line-height: 1; 
-	min-width: 65vw; 
+	min-width: 75vw; 
 	text-align: center;
 	text-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
     letter-spacing: -2px;
 }
 #timer {
 	font-family: 'Share Tech Mono', monospace;
-	font-size: 24vw; /* Mono fonts usually look a bit smaller, so we bump it up */
+	font-size: 30vh; /* Mono fonts usually look a bit smaller, so we bump it up */
 	font-weight: 600;
 	text-transform: uppercase;
 	line-height: 1; 
-	min-width: 65vw; 
+	min-width: 75vw; 
 	text-align: center; /* Center works perfectly with Mono fonts! */
 	color: #fff;
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
 }
-#next { font-size: 4vw; color: #555; font-weight: bold; margin-top: 1vh; }
-
-.state-btn {
-    width: 80vw;
-    height: 12vh;
-    font-size: 4vh;
-    border-radius: 100px; /* Pill shape */
-    margin-bottom: 3vh;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+#next {
+	font-size: 5vh;
+	color: #999;
+	font-weight: bold;
 }
 
-.state-btn { 
-	padding: 15px;
+.state-btn {
+	width: 180px;
+    height: 12vh;
+    font-size: 3.3vh;
+    margin-bottom: 2vh;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+	padding: 1vh;
 	border: 2px solid #333; 
-	border-radius: 12px;
+	border-radius: 1vh;
 	cursor: pointer;
 	font-weight: bold;
-	width: 180px;
-	font-size: 2.2vw;
-	line-height: 1.2;
 	text-align: center;
 	text-transform: uppercase;
 }
