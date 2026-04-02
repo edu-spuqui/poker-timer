@@ -55,7 +55,8 @@
     </style>
 </head>
 <body id="mainBody">
-
+	<div id="wall-clock">00:00:00</div>
+	
     <div class="row">
         <button class="adj-btn" onclick="changeLevel(-1)">◀</button>
         <div id="blinds">-- / --</div>
@@ -146,6 +147,7 @@
 					updateDisplay();
 				}, 1000);
 			}
+			requestWakeLock();
 		}
 
 		function changeLevel(direction) {
@@ -162,7 +164,20 @@
 			if (timeLeft < 0) timeLeft = 0;
 			updateDisplay();
 		}
-		
+
+		let wakeLock = null;
+
+		async function requestWakeLock() {
+		  try {
+			if ('wakeLock' in navigator) {
+			  wakeLock = await navigator.wakeLock.request('screen');
+			  console.log('Screen Wake Lock is active');
+			}
+		  } catch (err) {
+			console.error(`${err.name}, ${err.message}`);
+		  }
+		}		
+
 		if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js'); }
 		
 		setInterval(() => {
