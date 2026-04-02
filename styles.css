@@ -225,3 +225,42 @@ body {
     line-height: 1.4;
     resize: none; /* Tablet users shouldn't manually resize */
 }
+
+/* PORTRAIT (Optimized for Width) */
+@media (orientation: portrait) {
+    #blinds {
+        font-size: 16vw; /* Switch to width-based */
+        margin-top: 2vh;
+    }
+
+    #timer {
+        font-size: 24vw; /* Switch to width-based */
+    }
+
+    #next {
+        font-size: 5vw;
+        margin-bottom: 1vh;
+    }
+
+    .state-btn {
+        width: 80vw;   /* Make button wider to fit the thumb better */
+        height: 8vh;
+        font-size: 4vw;
+    }
+    
+    #topBar {
+        padding: 0 3vw;
+    }
+}
+
+@media (max-height: 450px) {
+    /* If the screen gets too short (like when a keyboard is out) */
+    .config-card {
+        height: 95dvh;
+        padding: 15px;
+    }
+    
+    #input-blinds {
+        font-size: 14px; /* Shrink text slightly to show more lines */
+    }
+}
