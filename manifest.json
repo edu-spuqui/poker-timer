@@ -1,17 +1,22 @@
 {
-  "short_name": "PSOP Timer",
+  "short_name": "PSOP",
   "name": "Pilarzinho Series of Poker",
+  "display": "standalone",
+  "start_url": "./pokertimer.html",
+  "background_color": "#000000",
+  "theme_color": "#000000",
   "icons": [
     {
       "src": "icon.png",
-      "type": "image/png",
       "sizes": "640x640",
-      "purpose": "any maskable"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "640x640",
+      "type": "image/png",
+      "purpose": "maskable"
     }
-  ],
-  "start_url": "./pokertimer.html",
-  "background_color": "#000000",
-  "display": "standalone",
-  "scope": "./",
-  "theme_color": "#000000"
+  ]
 }
