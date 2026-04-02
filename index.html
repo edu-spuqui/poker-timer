@@ -35,15 +35,19 @@
 			min-width: 65vw; 
 			text-align: center;
 		}
-        #timer {
-			font-family: 'Orbitron', sans-serif; /* The digital look */
-			font-size: 22vw;
-			font-weight: 800;
-			line-height: 1;
-			font-variant-numeric: tabular-nums;
-			min-width: 65vw;
-			text-align: center;
+		.timer-container {
+			width: 65vw;
+			display: flex;
+			justify-content: center; /* Centers the container in the row */
 		}
+		#timer {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 22vw;
+			text-align: left; /* Alignment is now fixed to the left */
+			min-width: 58vw;  /* This "locks" the width so it doesn't shrink/grow */
+			display: inline-block;
+		}
+
         #next { font-size: 4vw; color: #555; font-weight: bold; margin-top: 1vh; }
 
         .controls { position: absolute; top: 3vh; right: 3vh; }
@@ -75,6 +79,8 @@
 <body id="mainBody">
 	<div id="wall-clock">00:00:00</div>
 	
+    <div id="next">Próximo nível: -- / --</div>
+
     <div class="row">
         <button class="adj-btn" onclick="changeLevel(-1)">◀</button>
         <div id="blinds">-- / --</div>
@@ -86,8 +92,6 @@
         <div id="timer">12:00</div>
         <button class="adj-btn" onclick="adjustTime(60)">▶</button>
     </div>
-
-    <div id="next">Próximo nível: -- / --</div>
     
     <div class="controls">
         <button id="playBtn" class="state-btn btn-green" onclick="toggleTimer()">Iniciar<br>Jogo</button>
@@ -97,10 +101,10 @@
 
 	<script>
 		const levels = [
-			"5 / 10", "10 / 20", "15 / 30", "20 / 40", "25 / 50", "30 / 60", 
-			"40 / 80", "50 / 100", "Intervalo", "60 / 120", "75 / 150", "100 / 200", 
-			"125 / 250", "150 / 300", "200 / 400", "300 / 600", "400 / 800", "500 / 1K", 
-			"1K / 2K", "1.5K / 3K", "2K / 4K", "3K / 6K", "4K / 8K", "5K / 10K", "7.5K / 15K", "10K / 20K"
+			"5 / 10", "10 / 20", "15 / 30", "20 / 40", "25 / 50", "30 / 60", "40 / 80", "50 / 100", 
+			"Intervalo", "60 / 120", "75 / 150", "100 / 200", "125 / 250", "150 / 300", 
+			"200 / 400", "300 / 600", "400 / 800", "500 / 1K", "1K / 2K", "1.5K / 3K", 
+			"2K / 4K", "3K / 6K", "4K / 8K", "5K / 10K", "7.5K / 15K", "10K / 20K"
 		];
 		
 		let currentLevel = 0;
@@ -112,7 +116,7 @@
 			const secs = timeLeft % 60;
 			document.getElementById('timer').innerText = `${mins}:${secs.toString().padStart(2, '0')}`;
 			document.getElementById('blinds').innerText = levels[currentLevel];
-			document.getElementById('next').innerText = "Próximo nível: " + (levels[currentLevel + 1] || "FIM");
+			document.getElementById('next').innerText = "Próximo nível: " + (levels[currentLevel + 1] || "Acabou!");
 			
 			const isBreak = levels[currentLevel] === "Intervalo";
 			document.getElementById('blinds').style.color = isBreak ? "#ffaa00" : "#00ff00";
@@ -152,8 +156,8 @@
 				body.classList.add('rolling');
 				timerId = setInterval(() => {
 					// THE TRIGGER LOGIC
-					if (timeLeft === 5) {
-						playAlarm(); // Start 7s audio at 5s remaining
+					if (timeLeft === 6) {
+						playAlarm(); // Start 7s audio at 6s remaining
 					}
 
 					if (timeLeft <= 0) {
