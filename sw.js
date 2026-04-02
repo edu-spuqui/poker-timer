@@ -1,10 +1,11 @@
 const CACHE_NAME = 'psop-v1';
 const ASSETS = [
-  './pokertimer.html',
+  './index.html',
   './manifest.json',
   './icon.png',
   './alarm.mp3',
-  'https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap'
+  './sw.js', // Good practice to include the worker itself
+  'https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Teko:wght@600&display=swap'
 ];
 
 // Install: Cache all the poker gear
