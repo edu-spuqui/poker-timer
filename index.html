@@ -12,7 +12,7 @@
             font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; 
             margin: 0; display: flex; flex-direction: column; 
             align-items: center; justify-content: center; 
-            height: 102vh; overflow-y: auto; 
+            height: 102vh; overflow: hidden; 
         }
 
         .row { display: flex; align-items: center; justify-content: center; width: 100%; position: relative; }
@@ -40,7 +40,18 @@
         /* Green for Start and Running */
         .btn-green { background: #064506; color: #fff; border-color: #00ff00; } 
         /* Red for Paused */
-        .btn-red { background: #610c0c; color: #fff; border-color: #ff0000; }  
+        .btn-red { background: #610c0c; color: #fff; border-color: #ff0000; }
+		#wall-clock {
+			position: absolute;
+			top: 3vh;
+			left: 3vh;
+			font-size: 2.2vw; /* Slightly smaller to fit the seconds */
+			color: #444; 
+			font-weight: bold;
+			font-family: 'Courier New', Courier, monospace; /* Monospaced for stability */
+			font-variant-numeric: tabular-nums;
+			letter-spacing: 1px;
+		}
     </style>
 </head>
 <body id="mainBody">
@@ -151,7 +162,20 @@
 			if (timeLeft < 0) timeLeft = 0;
 			updateDisplay();
 		}
-
+		
+		if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js'); }
+		
+		setInterval(() => {
+			if (document.getElementById('wall-clock').innerText === "00:00:00") {
+				const now = new Date();
+				document.getElementById('wall-clock').innerText = now.toLocaleTimeString('pt-BR', { 
+					hour: '2-digit', 
+					minute: '2-digit', 
+					second: '2-digit' 
+				});
+			}
+		}, 1000);
+		
 		updateDisplay();
 	</script>
 </body>
