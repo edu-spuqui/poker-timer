@@ -35,16 +35,18 @@ body {
 #wall-clock {
 	font-family: 'Digital7Mono', monospace;
 	font-size: 4vh;
-	color: #999; 
-	letter-spacing: 1px;
+	color: #999;
 }
 #config-btn {
     background: transparent;
     color: #999;
     border: none;
     font-size: 4vh;
+	width: 4vh;
+	height: 4vh;
+	display: flex;
+	align-items: center;
     cursor: pointer;
-	margin-top: -0.5vh;
 }
 .row {
 	display: flex;
@@ -206,7 +208,8 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
 	width: 2.5ch;
 }
 #input-blinds {
-    background: #222;
+    max-width: 18ch;
+	background: #222;
     border: 1px solid #444;
     color: white;
     margin: 0.5vh;
