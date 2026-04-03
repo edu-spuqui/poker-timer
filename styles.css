@@ -171,6 +171,7 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
 	justify-content: space-between;
 }
 .config-left {
+	min-width:50%;
 	display:flex;
 	flex-direction: column;
 	justify-content:space-between;
@@ -187,7 +188,6 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
     font-family: 'Share Tech Mono', monospace;
 }
 .config-right {
-	max-width:50%;
 	height: 100%;
 	display:flex;
 	flex-direction: column;
