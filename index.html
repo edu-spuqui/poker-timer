@@ -6,7 +6,7 @@
     <title>Poker Timer • PT-BR</title>
 	<link rel="icon" type="image/png" href="icon.png">
 	<link rel="shortcut icon" href="icon.png">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=1.1">
 	<link href="https://fonts.googleapis.com/css2?family=Teko&display=swap" rel="stylesheet">
 	<style>
     </style>
@@ -22,8 +22,8 @@
 		<div id="next">Próximo nível: -- / --</div>
 		<div class="row">
 			<button class="adj-btn" onclick="changeLevel(-1)">◀</button>
-			<div id="blinds">-- / --</div>
-			<button class="adj-btn" onclick="changeLevel(1)">▶</button>
+			<div id="blinds">-- | --</div>
+			<button class="adj-btn" id="btn-next-level" onclick="changeLevel(1)">▶</button>
 		</div>
 	</div>
 
@@ -55,7 +55,6 @@
 				</div>
 
 				<div><label>Duração do Nível</label><br><input type="number" id="input-level-time" value="12"><span style="font-size:5vh;">min</span></div>
-				<div><label>Duração do Intervalo</label><br><input type="number" id="input-break-time" value="15"><span style="font-size:5vh;">min</span></div>
 			</div>
 			
 			<div class="config-right">
@@ -65,7 +64,7 @@
 		</div>
 		<div class="config-actions">
 			<button class="btn-secondary" onclick="hideConfig()">Cancelar</button>
-			<button class="btn-primary" onclick="saveAndApplyConfig()">Aplicar e Salvar</button>
+			<button class="btn-primary" onclick="saveAndApplyConfig()">Aplicar</button>
 		</div>
     </div>
 </div>

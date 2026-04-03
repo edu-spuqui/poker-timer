@@ -87,7 +87,9 @@ body {
     padding: 1vh;
     width: 92vw;
 }
-
+.orange-text {
+    color: #fa0;
+}
 #next {
 	font-family: 'SimplySerif';
 	font-size: 5vh;
@@ -185,27 +187,22 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
 	justify-content: space-between;
 }
 .config-left {
-	width:70%;
 	display:flex;
 	flex-direction: column;
 	justify-content:space-between;
 	align-items:start;
 	max-height:83vh;
 }
-.config-card h2 { color: #00ff00; font-size:4vmin; }
-.config-card label { color: #999; }
-.config-card input, .config-card textarea {
+.config-card h2 { color: #00ff00; font-size:calc(2vh + 2vmin); }
+.config-card input {
     background: #222;
     border: 1px solid #444;
     color: white;
-    padding: 5px;
-    margin-top: 5px;
-    border-radius: 5px;
-    font-family: inherit;
+    padding: 0.5vh;
+    border-radius: 2.5vh;
+    font-family: 'Share Tech Mono', monospace;
 }
-
 .config-right {
-	width:30%;
 	height: 100%;
 	display:flex;
 	flex-direction: column;
@@ -218,31 +215,23 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
 	background-color:#222;
 	color:white;
 	border:1px solid #444;
-	border-radius:5px;
-	padding:5px;
+	border-radius:1vh;
+	padding:0.5vh;
 	font-size:3vh;
 }
 #input-level-time {
 	font-size:10vh;
-	max-width:16vh;
-}
-#input-break-time {
-	font-size:10vh;
-	max-width:16vh;
+	width: 2.5ch;
 }
 #input-blinds {
     background: #222;
     border: 1px solid #444;
     color: white;
-    margin: 5px;
-    border-radius: 5px;
+    margin: 0.5vh;
+    border-radius: 0.5vh;
     font-family: 'Share Tech Mono', monospace;
     font-size: 2.45vh;
     line-height: 1.2;
-	max-width: 16vh;
-	width: calc(10ch + 0.4vh);
-    
-    /* NEW: This forces the textarea to take up all remaining space */
     flex-grow: 1; 
     resize: none;
 }
@@ -254,25 +243,35 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
     justify-content: flex-end; /* Aligns buttons to the right */
 }
 
-.config-card button {
-    padding: 10px 20px;
-    border-radius: 8px;
+.config-card button:not(.btn-outline) {
+    padding: 1.5vh 2vh;
+    border-radius: 1vh;
     border: none;
     font-weight: bold;
     cursor: pointer;
     text-transform: uppercase;
-    font-size: 15px;
+	font-size: 2.5vh;
 }
 
 .btn-primary { background: #00ff00; color: #000; }
 .btn-secondary { background: #333; color: #ccc; }
 .btn-outline {
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+	border-radius: 50%;
 	background: transparent;
-	border: 1px solid #444 !important;
-	color: #999;
-	padding: 5px 10px;
+	font-size: 3.3vh;
+	width: 5vh;
+	height: 5vh;
+	color: #4f4;
+	align-items:center;
+	justify-items:center;
 }
-
+.btn-outline:active {
+	background: #4f4;
+	color: #000;
+}
 
 /* PORTRAIT (Optimized for Width) */
 @media (orientation: portrait) {
@@ -297,17 +296,6 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
     }
 }
 
-@media (max-height: 450px) {
-    /* If the screen gets too short (like when a keyboard is out) */
-    .config-card {
-        height: 95dvh;
-        padding: 15px;
-    }
-    
-    #input-blinds {
-        font-size: 14px; /* Shrink text slightly to show more lines */
-    }
-}
 
 #input-blinds::-webkit-scrollbar { width: 0.4vh; }
 #input-blinds::-webkit-scrollbar-thumb { background-color: #999; }
