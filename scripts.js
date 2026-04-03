@@ -1,3 +1,10 @@
+// --- PRESETS CONFIGURATION ---
+const PRESETS = {
+    "psop": { name: "Pilarzinho Series of Poker", file: "./PSOP.json" },
+    "new1": { name: "Slot Livre 1", file: "./new1.json" }, // Example for future use
+    "new2": { name: "Slot Livre 2", file: "./new2.json" } // Example
+};
+
 // Global state
 let currentLevels = []; 
 let levelDuration = 720; 
@@ -5,6 +12,7 @@ let breakDuration = 900;
 let currentLevel = 0;
 let timeLeft = 12 * 60;
 let timerId = null;
+let isStarted = false; // New flag to lock the UI after the first start
 
 // --- CONFIGURATION LOGIC ---
 
@@ -18,16 +26,27 @@ async function loadPSOP() {
         console.error("Erro no carregamento inicial:", err);
     }
 }
+async function loadPresetIntoForm() {
+    const selector = document.getElementById('preset-selector');
+    const selectedKey = selector.value;
+    
+    if (!selectedKey) return;
 
-// This now ONLY fills the form, it doesn't apply the config to the game
-async function loadPSOPIntoForm() {
     try {
-        const response = await fetch('./PSOP.json');
+        const response = await fetch(PRESETS[selectedKey].file);
+        if (!response.ok) throw new Error("Arquivo não encontrado");
+        
         const data = await response.json();
-        syncFormWithConfig(data);
-        console.log("Formulário resetado para o padrão PSOP.");
+        
+        // Populate the form fields
+        document.getElementById('input-level-time').value = data.levelTime;
+        document.getElementById('input-break-time').value = data.breakTime;
+        document.getElementById('input-blinds').value = data.levels.join('\n');
+        
+        console.log(`Formulário populado com: ${PRESETS[selectedKey].name}`);
     } catch (err) {
-        console.error("Erro ao buscar PSOP.json:", err);
+        alert("Erro ao carregar o preset. Verifique se o arquivo .json existe.");
+        console.error(err);
     }
 }
 
@@ -35,8 +54,8 @@ async function loadPSOPIntoForm() {
 function saveAndApplyConfig() {
     const rawBlinds = document.getElementById('input-blinds').value;
     const blindArray = rawBlinds.split('\n')
-        .map(s => s.trim())
-        .filter(line => line !== "");
+        // .map(s => s.trim())
+        .filter(line => line.trim() !== "");
 
     if (blindArray.length === 0) {
         alert("A estrutura de blinds não pode estar vazia!");
@@ -55,31 +74,47 @@ function saveAndApplyConfig() {
     
     applyConfig(customData);
 }
-
-async function applyConfig(config) {
-    levelDuration = (parseInt(config.levelTime) || 12) * 60;
-    breakDuration = (parseInt(config.breakTime) || 15) * 60;
-    currentLevels = config.levels;
-
-    currentLevel = 0;
-    const isBreak = currentLevels[currentLevel] === "Intervalo";
-    timeLeft = isBreak ? breakDuration : levelDuration;
-
-    // SINCRONIZA O FORMULÁRIO
-    syncFormWithConfig(config);
-
-    hideConfig();
-    updateDisplay();
-}
-
-function clearSavedConfig() {
-    if(confirm("Deseja apagar sua configuração salva e voltar ao padrão PSOP?")) {
-        localStorage.removeItem('customPokerConfig');
-        loadPSOP();
-        hideConfig();
+function applyConfig(data) {
+    releaseWakeLock();
+	
+	// 1. Stop the timer and clear the interval
+    if (timerId) {
+        clearInterval(timerId);
+        timerId = null;
     }
-}
 
+    // 2. Reset the Start Button UI and State
+    document.body.classList.remove('rolling');
+    document.body.classList.remove('paused');
+    document.body.classList.remove('warning');
+	const btn = document.getElementById('playBtn');
+    if (btn) {
+        btn.innerText = "Iniciar Jogo";
+        btn.className = "state-btn btn-green";
+    }
+    isStarted = false; // Allow adjustment arrows to reappear
+	
+    // 3. Load the data into the app's engine
+    currentLevels = data.levels;
+    levelDuration = (data.levelTime || 12) * 60;
+    breakDuration = (data.breakTime || 15) * 60;
+    currentLevel = 0;
+    
+    // Set initial time based on first level content
+    
+	if (currentLevels[0].toLowerCase().includes("intervalo")) {
+        timeLeft = breakDuration;
+    } else {
+        timeLeft = levelDuration;
+    }
+
+    // 4. SYNC: Update the form fields to match the new configuration
+    syncFormWithConfig(data);
+
+    // 5. Refresh the UI and Close
+    updateDisplay();
+    hideConfig();
+}
 function syncFormWithConfig(config) {
     const inputLevel = document.getElementById('input-level-time');
     const inputBreak = document.getElementById('input-break-time');
@@ -89,7 +124,6 @@ function syncFormWithConfig(config) {
     if (inputBreak) inputBreak.value = config.breakTime;
     if (inputBlinds) inputBlinds.value = config.levels.join('\n');
 }
-
 function saveCustomGame() {
     const rawBlinds = document.getElementById('input-blinds').value;
     const blindArray = rawBlinds.split('\n').filter(line => line.trim() !== "");
@@ -104,17 +138,14 @@ function saveCustomGame() {
     localStorage.setItem('customPokerConfig', JSON.stringify(customData));
     applyConfig(customData);
 }
-
 function showConfig() {
     document.getElementById('config-overlay').style.display = 'flex';
 }
-
 function hideConfig() {
     document.getElementById('config-overlay').style.display = 'none';
 }
 
 // --- CORE TIMER LOGIC ---
-
 function updateDisplay() {
     if (currentLevels.length === 0) {
         document.getElementById('blinds').innerText = "Carregar Jogo";
@@ -129,24 +160,33 @@ function updateDisplay() {
     document.getElementById('blinds').innerText = currentLevels[currentLevel];
     document.getElementById('next').innerText = "Próximo nível: " + (currentLevels[currentLevel + 1] || "Acabou!");
     
-    const isBreak = currentLevels[currentLevel] === "Intervalo";
-    document.getElementById('blinds').style.color = isBreak ? "#ffaa00" : "#00ff00";
-    document.getElementById('timer').style.color = timeLeft <= 15 ? "#ff4444" : "#fff";
+	// Update buttons visibility based on isStarted
+    const adjButtons = document.querySelectorAll('.adj-btn');
+    adjButtons.forEach(btn => {
+        // Hide if the game has started, regardless of pause state
+        btn.style.visibility = isStarted ? 'hidden' : 'visible';
+    });
+	
+   	const levelText = currentLevels[currentLevel].toLowerCase();
+    const isBreak = levelText.includes("intervalo");
+    document.getElementById('blinds').style.color = isBreak ? "#fa0" : "#fff";
+    const body = document.getElementById('mainBody');
+	if (timeLeft <= 10)	body.classList.add('warning');
 }
-
 function changeLevel(direction) {
     if (currentLevels.length === 0) return;
+	document.body.classList.remove('warning');
 
     currentLevel += direction;
     if (currentLevel < 0) currentLevel = 0;
     if (currentLevel >= currentLevels.length) currentLevel = currentLevels.length - 1;
     
-    const isBreak = currentLevels[currentLevel] === "Intervalo";
-    timeLeft = isBreak ? breakDuration : levelDuration;
+	const levelText = currentLevels[currentLevel].toLowerCase();
+    if (levelText.includes("intervalo")) { timeLeft = breakDuration; }
+	else { timeLeft = levelDuration; }
     
     updateDisplay();
 }
-
 function toggleTimer() {
     if (currentLevels.length === 0) {
         showConfig();
@@ -159,13 +199,21 @@ function toggleTimer() {
     if (timerId) {
         clearInterval(timerId);
         timerId = null;
-        btn.innerHTML = "Jogo<br>Pausado";
+        btn.innerHTML = "Jogo Pausado";
         btn.className = "state-btn btn-red";
         body.classList.remove('rolling');
+        body.classList.add('paused');
     } else {
-        btn.innerHTML = "Jogo<br>Rolando";
+		// Starting or Retuming
+        if (!isStarted) {
+            isStarted = true;
+            requestWakeLock();
+        }        
+		
+		btn.innerHTML = "Jogo Rolando";
         btn.className = "state-btn btn-green";
         body.classList.add('rolling');
+        body.classList.remove('paused');
         timerId = setInterval(() => {
             if (timeLeft === 6) playAlarm();
             if (timeLeft <= 0) {
@@ -176,9 +224,7 @@ function toggleTimer() {
             updateDisplay();
         }, 1000);
     }
-    requestWakeLock();
 }
-
 function adjustTime(seconds) {
     timeLeft += seconds;
     if (timeLeft < 0) timeLeft = 0;
@@ -186,7 +232,6 @@ function adjustTime(seconds) {
 }
 
 // --- UTILITIES & AUDIO ---
-
 function playAlarm() {
     const audio = document.getElementById('alarmSound');
     audio.currentTime = 0;
@@ -200,7 +245,6 @@ function playAlarm() {
         osc.start(); osc.stop(ctx.currentTime + 1);
     });
 }
-
 let wakeLock = null;
 async function requestWakeLock() {
     try {
@@ -209,6 +253,16 @@ async function requestWakeLock() {
         }
     } catch (err) {
         console.error(`${err.name}, ${err.message}`);
+    }
+}
+async function releaseWakeLock() {
+    if (wakeLock !== null) {
+        try {
+            await wakeLock.release();
+            wakeLock = null; // Important: Clear the reference
+        } catch (err) {
+            console.error(`${err.name}, ${err.message}`);
+        }
     }
 }
 
@@ -224,7 +278,6 @@ function startWallClock() {
 }
 
 // --- INITIALIZATION ---
-
 async function init() {
     startWallClock();
     

@@ -1,8 +1,18 @@
+@font-face {
+	font-family: 'Digital7Mono';
+	src: url('digital-7.mono.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'SimplySerif';
+	src: url('SimplySerif-Bold.ttf') format('truetype');
+}
+
 body { 
     background: #000;
     color: #fff; 
     font-family: Roboto, Helvetica, sans-serif; 
-    margin: 0;
+    font-size: 2vh;
+	margin: 0.2vmin;
     display: flex;
     flex-direction: column; 
     align-items: center;
@@ -25,8 +35,8 @@ body {
 }
 
 #wall-clock {
-	font-family: 'Orbitron', sans-serif;
-	font-size: 3vh;
+	font-family: 'Digital7Mono', monospace;
+	font-size: 4vh;
 	color: #999; 
 	letter-spacing: 1px;
 }
@@ -53,9 +63,9 @@ body {
     color: #0f0;
     border: 1px solid #333;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    font-size: 30px;
+    width: 6vh;
+    height: 6vh;
+    font-size: 4vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,50 +77,57 @@ body {
     color: #000;
 }
 
-.rolling .adj-btn {
-	opacity: 0;
-	pointer-events: none;
-}
-
 /* Container for a cleaner look */
 .control-block {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: rgba(255, 255, 255, 0.03);
+    background-color: rgba(255,255,255,0.05);
     border-radius: 20px;
     padding: 1vh;
     width: 92vw;
 }
 
-#blinds {
-	font-family: 'Teko', sans-serif; 
-	font-size: 30vh; /* You can go even bigger since Teko is narrow */
-	font-weight: 600;
-	text-transform: uppercase;
-	color: #00ff00; 
-	line-height: 1; 
-	min-width: 75vw; 
-	text-align: center;
-	text-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
-    letter-spacing: -2px;
-}
-#timer {
-	font-family: 'Share Tech Mono', monospace;
-	font-size: 30vh; /* Mono fonts usually look a bit smaller, so we bump it up */
-	font-weight: 600;
-	text-transform: uppercase;
-	line-height: 1; 
-	min-width: 75vw; 
-	text-align: center; /* Center works perfectly with Mono fonts! */
-	color: #fff;
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-}
 #next {
+	font-family: 'SimplySerif';
 	font-size: 5vh;
 	color: #999;
 	font-weight: bold;
 }
+#blinds {
+	font-family: 'SimplySerif';
+	/*font-family: 'Karma';*/
+	font-size: 22vh;
+	color: #fff; 
+	line-height: 1; 
+	min-width: 80vw; 
+	text-align: center;
+	text-shadow: 0 0 0.6vh rgba(255, 255, 255, 1);
+}
+#timer {
+	font-family: 'Digital7Mono', monospace;
+	font-size: 32vh; /* Mono fonts usually look a bit smaller, so we bump it up */
+	text-transform: uppercase;
+	line-height: 1; 
+	min-width: 80vw; 
+	text-align: center; /* Center works perfectly with Mono fonts! */
+	color: #fff;
+    text-shadow: 0 0 0.6vh rgba(255, 255, 255, 1);
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0.1; /* High transparency for the 'off' look */
+    }
+}
+
+body.rolling #timer { color: #00ff00; }
+body.paused #timer { color: #ff0000; }
+body.warning #timer {
+	color: #ff0000;
+	animation: blinker 0.6s linear infinite;
+}
+body:not(.rolling):not(.paused) #timer { color: #fff; }
 
 .state-btn {
 	width: 180px;
@@ -141,60 +158,92 @@ body {
     display: none; /* Hidden by default */
     justify-content: center;
     align-items: center;
-    z-index: 2000;
+    z-index: 20;
 }
 
 .config-card {
     background: #111;
-    border: 1px solid #333;
-    padding: 30px;
-    border-radius: 20px;
-    width: 80%;
-    max-width: 450px;
+    max-width: 75vh;
+    width: 100%;
+    max-height: 90vh; 
+	height: 100%;
     display: flex;
     flex-direction: column;
+    border: 2px solid #333;
+    border-radius: 25px;
+    padding: 25px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+	font-size:3vh;
 }
-
-.config-card h2 { color: #00ff00; margin-top: 0; }
-.config-card label { margin-top: 15px; color: #999; font-size: 0.9rem; }
+.config-sidebyside {
+	max-width: 75vh;
+	width: 100%;
+	max-height: 90vh;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.config-left {
+	width:70%;
+	display:flex;
+	flex-direction: column;
+	justify-content:space-between;
+	align-items:start;
+	max-height:83vh;
+}
+.config-card h2 { color: #00ff00; font-size:4vmin; }
+.config-card label { color: #999; }
 .config-card input, .config-card textarea {
     background: #222;
     border: 1px solid #444;
     color: white;
-    padding: 10px;
+    padding: 5px;
     margin-top: 5px;
     border-radius: 5px;
     font-family: inherit;
 }
 
-.config-card {
-    background: #111;
-    border: 2px solid #333;
-    padding: 25px;
-    border-radius: 15px;
-    width: 90%;
-    max-width: 500px;
-    
-    /* NEW: Increase height and use flexbox */
-    height: 85vh; 
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+.config-right {
+	width:30%;
+	height: 100%;
+	display:flex;
+	flex-direction: column;
+	justify-content:space-between;
+	align-items:center;
 }
 
+#preset-selector {
+	width: 100%;
+	background-color:#222;
+	color:white;
+	border:1px solid #444;
+	border-radius:5px;
+	padding:5px;
+	font-size:3vh;
+}
+#input-level-time {
+	font-size:10vh;
+	max-width:16vh;
+}
+#input-break-time {
+	font-size:10vh;
+	max-width:16vh;
+}
 #input-blinds {
     background: #222;
     border: 1px solid #444;
     color: white;
-    padding: 15px;
-    margin-top: 5px;
+    margin: 5px;
     border-radius: 5px;
     font-family: 'Share Tech Mono', monospace;
-    font-size: 18px;
+    font-size: 2.45vh;
+    line-height: 1.2;
+	max-width: 16vh;
+	width: calc(10ch + 0.4vh);
     
     /* NEW: This forces the textarea to take up all remaining space */
     flex-grow: 1; 
-    margin-bottom: 20px;
     resize: none;
 }
 
@@ -202,7 +251,6 @@ body {
 .config-actions {
     display: flex;
     gap: 10px;
-    margin-top: 20px;
     justify-content: flex-end; /* Aligns buttons to the right */
 }
 
@@ -213,30 +261,28 @@ body {
     font-weight: bold;
     cursor: pointer;
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .btn-primary { background: #00ff00; color: #000; }
 .btn-secondary { background: #333; color: #ccc; }
-.btn-outline { background: transparent; border: 1px solid #444 !important; color: #999; }
-
-/* The Textarea needs to look like a code editor */
-#input-blinds {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 16px;
-    line-height: 1.4;
-    resize: none; /* Tablet users shouldn't manually resize */
+.btn-outline {
+	background: transparent;
+	border: 1px solid #444 !important;
+	color: #999;
+	padding: 5px 10px;
 }
+
 
 /* PORTRAIT (Optimized for Width) */
 @media (orientation: portrait) {
     #blinds {
-        font-size: 22vw; /* Switch to width-based */
+        font-size: 16vw; /* Switch to width-based */
         margin-top: 2vh;
     }
 
     #timer {
-        font-size: 24vw; /* Switch to width-based */
+        font-size: 32vw; /* Switch to width-based */
     }
 
     #next {
@@ -262,3 +308,6 @@ body {
         font-size: 14px; /* Shrink text slightly to show more lines */
     }
 }
+
+#input-blinds::-webkit-scrollbar { width: 0.4vh; }
+#input-blinds::-webkit-scrollbar-thumb { background-color: #999; }
