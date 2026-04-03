@@ -123,7 +123,7 @@ function openAdjustmentWindow() {
         showNextLevelOnly = false;
         adjustmentWindowTimeout = null;
         updateDisplay(); // Hide the button after 30 seconds
-    }, 7000);
+    }, 5000);
 }
 
 // Config UI

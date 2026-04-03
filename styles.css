@@ -171,7 +171,6 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
 	justify-content: space-between;
 }
 .config-left {
-	min-width:50%;
 	display:flex;
 	flex-direction: column;
 	justify-content:space-between;
@@ -209,7 +208,7 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
 	width: 2.5ch;
 }
 #input-blinds {
-    max-width: 18ch;
+    max-width: calc(12ch + 0.4vh);
 	background: #222;
     border: 1px solid #444;
     color: white;
