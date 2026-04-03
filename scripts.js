@@ -295,10 +295,15 @@ async function init() {
     const saved = localStorage.getItem('customPokerConfig');
     
     if (saved) {
-        // applyConfig agora chama syncFormWithConfig internamente
-        applyConfig(JSON.parse(saved));
+		applyConfig(JSON.parse(saved));
     } else {
-        loadPSOP(); // O loadPSOP original que chama applyConfig
+		try {
+            const response = await fetch(PRESETS.psop.file);
+            const data = await response.json();
+            applyConfig(data);
+        } catch (err) {
+            console.error("Erro ao carregar o preset padrão:", err);
+        }
     }
 }
 

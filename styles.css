@@ -25,7 +25,6 @@ body {
     padding: 1vh 0; /* Add a little breathing room top/bottom */
     box-sizing: border-box;
 }
-
 #topBar {
 	width: calc(100% - 2vh);
 	display: flex;
@@ -33,14 +32,12 @@ body {
 	align-items: start;
 	justify-content: space-between;
 }
-
 #wall-clock {
 	font-family: 'Digital7Mono', monospace;
 	font-size: 4vh;
 	color: #999; 
 	letter-spacing: 1px;
 }
-
 #config-btn {
     background: transparent;
     color: #999;
@@ -49,7 +46,6 @@ body {
     cursor: pointer;
 	margin-top: -0.5vh;
 }
-
 .row {
 	display: flex;
 	align-items: center;
@@ -57,7 +53,6 @@ body {
 	width: 100%;
 	position: relative;
 }
-
 .adj-btn { 
 	background: #222;
     color: #0f0;
@@ -71,13 +66,10 @@ body {
     justify-content: center;
     transition: all 0.2s;
 }
-
 .adj-btn:active {
     background: #0f0;
     color: #000;
 }
-
-/* Container for a cleaner look */
 .control-block {
     display: flex;
     flex-direction: column;
@@ -98,7 +90,6 @@ body {
 }
 #blinds {
 	font-family: 'SimplySerif';
-	/*font-family: 'Karma';*/
 	font-size: 22vh;
 	color: #fff; 
 	line-height: 1; 
@@ -116,13 +107,11 @@ body {
 	color: #fff;
     text-shadow: 0 0 0.6vh rgba(255, 255, 255, 1);
 }
-
 @keyframes blinker {
     50% {
         opacity: 0.1; /* High transparency for the 'off' look */
     }
 }
-
 body.rolling #timer { color: #00ff00; }
 body.paused #timer { color: #ff0000; }
 body.warning #timer {
@@ -130,7 +119,6 @@ body.warning #timer {
 	animation: blinker 0.6s linear infinite;
 }
 body:not(.rolling):not(.paused) #timer { color: #fff; }
-
 .state-btn {
 	width: 180px;
     height: 12vh;
@@ -145,13 +133,8 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
 	text-align: center;
 	text-transform: uppercase;
 }
-
-/* Green for Start and Running */
 .btn-green { background: #064506; color: #fff; border-color: #00ff00; }
-
-/* Red for Paused */
 .btn-red { background: #610c0c; color: #fff; border-color: #ff0000; }
-
 
 #config-overlay {
     position: fixed;
@@ -162,7 +145,6 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
     align-items: center;
     z-index: 20;
 }
-
 .config-card {
     background: #111;
     max-width: 75vh;
@@ -236,13 +218,11 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
     resize: none;
 }
 
-/* Button Container for the bottom row */
 .config-actions {
     display: flex;
     gap: 10px;
     justify-content: flex-end; /* Aligns buttons to the right */
 }
-
 .config-card button:not(.btn-outline) {
     padding: 1.5vh 2vh;
     border-radius: 1vh;
@@ -252,7 +232,6 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
     text-transform: uppercase;
 	font-size: 2.5vh;
 }
-
 .btn-primary { background: #00ff00; color: #000; }
 .btn-secondary { background: #333; color: #ccc; }
 .btn-outline {
@@ -273,7 +252,7 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
 	color: #000;
 }
 
-/* PORTRAIT (Optimized for Width) */
+/* PORTRAIT */
 @media (orientation: portrait) {
     #blinds {
         font-size: 16vw; /* Switch to width-based */
@@ -295,7 +274,6 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
         font-size: 4vw;
     }
 }
-
 
 #input-blinds::-webkit-scrollbar { width: 0.4vh; }
 #input-blinds::-webkit-scrollbar-thumb { background-color: #999; }
