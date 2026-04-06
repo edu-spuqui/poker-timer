@@ -19,7 +19,7 @@ body {
     justify-content: space-between; 
     
     /* FIX: Use dynamic viewport height */
-    height: 100dvh; 
+    height: 101vh; 
     width: 100vw;
     overflow: hidden;
     padding: 1vh 0; /* Add a little breathing room top/bottom */
