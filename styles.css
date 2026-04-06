@@ -21,7 +21,7 @@ body {
     /* FIX: Use dynamic viewport height */
     height: 101vh; 
     width: 100vw;
-    overflow: hidden;
+    overflow-y: auto;
     padding: 1vh 0; /* Add a little breathing room top/bottom */
     box-sizing: border-box;
 }
