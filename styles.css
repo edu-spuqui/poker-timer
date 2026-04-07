@@ -93,7 +93,7 @@ body {
 }
 #blinds {
 	font-family: 'SimplySerif';
-	font-size: 22vmax;
+	font-size:calc(11vh + 11vmin);
 	color: #fff; 
 	line-height: 1; 
 	min-width: 80vw; 
