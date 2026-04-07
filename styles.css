@@ -11,7 +11,7 @@ body {
     background: #000;
     color: #fff; 
     font-family: Roboto, Helvetica, sans-serif; 
-    font-size: 2vh;
+    font-size: 2vmax;
 	margin: 0.2vmin;
     display: flex;
     flex-direction: column; 
@@ -35,16 +35,16 @@ body {
 }
 #wall-clock {
 	font-family: 'Digital7Mono', monospace;
-	font-size: 4vh;
+	font-size: 4vmax;
 	color: #999;
 }
 #config-btn {
     background: transparent;
     color: #999;
     border: none;
-    font-size: 4vh;
-	width: 4vh;
-	height: 4vh;
+    font-size: 4vmax;
+	width: 4vmax;
+	height: 4vmax;
 	display: flex;
 	align-items: center;
     cursor: pointer;
@@ -60,10 +60,10 @@ body {
 	background: #222;
     color: #0f0;
     border: 1px solid #333;
-    border-radius: 10vh;
-    width: 10vh;
-    height: 10vh;
-    font-size: 7vh;
+    border-radius: 10vmax;
+    width: 10vmax;
+    height: 10vmax;
+    font-size: 7vmax;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -78,8 +78,8 @@ body {
     flex-direction: column;
     align-items: center;
     background-color: rgba(255,255,255,0.05);
-    border-radius: 20px;
-    padding: 1vh;
+    border-radius: 2vmax;
+    padding: 1vmax;
     width: 92vw;
 }
 .orange-text {
@@ -87,13 +87,13 @@ body {
 }
 #next {
 	font-family: 'SimplySerif';
-	font-size: 5vh;
+	font-size: 5vmax;
 	color: #999;
 	font-weight: bold;
 }
 #blinds {
 	font-family: 'SimplySerif';
-	font-size: 22vh;
+	font-size: 22vmax;
 	color: #fff; 
 	line-height: 1; 
 	min-width: 80vw; 
@@ -102,13 +102,13 @@ body {
 }
 #timer {
 	font-family: 'Digital7Mono', monospace;
-	font-size: 32vh; /* Mono fonts usually look a bit smaller, so we bump it up */
+	font-size: 32vmax; /* Mono fonts usually look a bit smaller, so we bump it up */
 	text-transform: uppercase;
 	line-height: 1; 
 	min-width: 80vw; 
 	text-align: center; /* Center works perfectly with Mono fonts! */
 	color: #fff;
-    text-shadow: 0 0 0.6vh rgba(255, 255, 255, 1);
+    text-shadow: 0 0 0.6vmax rgba(255, 255, 255, 1);
 }
 @keyframes blinker {
     50% {
@@ -124,13 +124,13 @@ body.warning #timer {
 body:not(.rolling):not(.paused) #timer { color: #fff; }
 .state-btn {
 	width: 180px;
-    height: 12vh;
-    font-size: 3.3vh;
-    margin-bottom: 2vh;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-	padding: 1vh;
+    height: 12vmax;
+    font-size: 3.3vmax;
+    margin-bottom: 2vmax;
+    box-shadow: 0 1vmax 3vmax rgba(0, 0, 0, 0.5);
+	padding: 1vmax;
 	border: 2px solid #333; 
-	border-radius: 1vh;
+	border-radius: 1vmax;
 	cursor: pointer;
 	font-weight: bold;
 	text-align: center;
@@ -157,10 +157,10 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
     display: flex;
     flex-direction: column;
     border: 2px solid #333;
-    border-radius: 25px;
-    padding: 25px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-	font-size:3vh;
+    border-radius: 2vmax;
+    padding: 2vmax;
+    box-shadow: 0 2vmax 5vmax rgba(0,0,0,0.8);
+	font-size:3vmax;
 }
 .config-sidebyside {
 	max-width: 75vh;
@@ -202,10 +202,10 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
 	border:1px solid #444;
 	border-radius:1vh;
 	padding:0.5vh;
-	font-size:3vh;
+	font-size:calc(2vh + 2vmin);
 }
 #input-level-time {
-	font-size:10vh;
+	font-size:calc(5vh + 5vmin);
 	width: 2.5ch;
 }
 #input-blinds {
@@ -216,7 +216,7 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
     margin: 0.5vh;
     border-radius: 0.5vh;
     font-family: 'Share Tech Mono', monospace;
-    font-size: 2.45vh;
+    font-size:calc(1.6vh + 1.6vmin);
     line-height: 1.2;
     flex-grow: 1; 
     resize: none;
@@ -234,7 +234,7 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
     font-weight: bold;
     cursor: pointer;
     text-transform: uppercase;
-	font-size: 2.5vh;
+	font-size:calc(1.6vh + 1.6vmin);
 }
 .btn-primary { background: #00ff00; color: #000; }
 .btn-secondary { background: #333; color: #ccc; }
@@ -244,7 +244,7 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
     cursor: pointer;
 	border-radius: 50%;
 	background: transparent;
-	font-size: 3.3vh;
+	font-size:calc(1.6vh + 1.6vmin);
 	width: 5vh;
 	height: 5vh;
 	color: #4f4;
