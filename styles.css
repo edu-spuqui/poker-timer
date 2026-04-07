@@ -102,7 +102,7 @@ body {
 }
 #timer {
 	font-family: 'Digital7Mono', monospace;
-	font-size: 32vmax; /* Mono fonts usually look a bit smaller, so we bump it up */
+	font-size:calc(16vh + 16vmin);
 	text-transform: uppercase;
 	line-height: 1; 
 	min-width: 80vw; 
