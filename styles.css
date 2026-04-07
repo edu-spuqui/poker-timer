@@ -264,7 +264,7 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
     }
 
     #timer {
-        font-size:calc(16vw + 16vmin);
+        font-size:calc(12vw + 12vmin);
     }
 
     #next {
