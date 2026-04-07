@@ -60,7 +60,7 @@ body {
 	background: #222;
     color: #0f0;
     border: 1px solid #333;
-    border-radius: 10vmax;
+    border-radius: 0vmax;
     width: 10vmax;
     height: 10vmax;
     font-size: 7vmax;
@@ -202,7 +202,7 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
 	border:1px solid #444;
 	border-radius:1vh;
 	padding:0.5vh;
-	font-size:calc(2vh + 2vmin);
+	font-size:calc(1.6vh + 1.6vmin);
 }
 #input-level-time {
 	font-size:calc(5vh + 5vmin);
@@ -216,7 +216,7 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
     margin: 0.5vh;
     border-radius: 0.5vh;
     font-family: 'Share Tech Mono', monospace;
-    font-size:calc(1.6vh + 1.6vmin);
+    font-size:calc(1.4vh + 1.4vmin);
     line-height: 1.2;
     flex-grow: 1; 
     resize: none;
