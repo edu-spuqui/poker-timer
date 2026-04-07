@@ -11,7 +11,9 @@ body {
     background: #000;
     color: #fff; 
     font-family: Roboto, Helvetica, sans-serif; 
-    font-size: 2vmax;
+    font-size: calc(2vh + 2vmin);
+	margin: 0px;
+	padding: 0px;
     display: flex;
     flex-direction: column; 
     align-items: center;
@@ -21,11 +23,11 @@ body {
     height: 100vh; 
     width: 100vw;
     overflow-x: hidden;
-	overflow-y: auto;
+    overflow-y: auto;
     box-sizing: border-box;
 }
 #topBar {
-	width: calc(100% - 2vh);
+	width: 100%;
 	display: flex;
 	flex-direction: row;
 	align-items: start;
@@ -33,16 +35,16 @@ body {
 }
 #wall-clock {
 	font-family: 'Digital7Mono', monospace;
-	font-size: 4vmax;
+	font-size: calc(2vh + 2vmax);
 	color: #999;
 }
 #config-btn {
     background: transparent;
     color: #999;
     border: none;
-    font-size: 4vmax;
-	width: 4vmax;
-	height: 4vmax;
+    font-size:	calc(2vh + 2vmax);
+	width:		calc(2vh + 2vmax);
+	height:		calc(2vh + 2vmax);
 	display: flex;
 	align-items: center;
     cursor: pointer;
@@ -51,17 +53,17 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 100%;
+	width: calc(100% - 2vh);
 	position: relative;
 }
 .adj-btn { 
 	background: #222;
     color: #0f0;
     border: 1px solid #333;
-    border-radius: 0vmax;
-    width: 10vw;
+    border-radius: 2vh;
+    width: 10%;
     height: 100%;
-    font-size:calc(6vh + 6vmin);
+    font-size:	calc(4vw + 4vmin);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -77,23 +79,22 @@ body {
     flex-direction: column;
     align-items: center;
     background-color: rgba(255,255,255,0.05);
-    border-radius: 2vmax;
-    padding: 1vmax;
-    width: 90vw;
-	box-sizing: border-box;
+    border-radius: 20px;
+    padding: 1vh;
+    width: calc(100% - 2vh);
 }
 .orange-text {
     color: #fa0;
 }
 #next {
 	font-family: 'SimplySerif';
-	font-size: 5vmax;
+	font-size:	calc(3vh + 1.5vmax);
 	color: #999;
 	font-weight: bold;
 }
 #blinds {
 	font-family: 'SimplySerif';
-	font-size:calc(11vh + 11vmin);
+	font-size:	calc(10vh + 6vmax);
 	color: #fff; 
 	line-height: 1; 
 	min-width: 80vw; 
@@ -102,13 +103,12 @@ body {
 }
 #timer {
 	font-family: 'Digital7Mono', monospace;
-	font-size:calc(16vh + 16vmin);
-	text-transform: uppercase;
+	font-size:	calc(16vh + 10vmax);
 	line-height: 1; 
 	min-width: 80vw; 
 	text-align: center; /* Center works perfectly with Mono fonts! */
 	color: #fff;
-    text-shadow: 0 0 0.6vmax rgba(255, 255, 255, 1);
+    text-shadow: 0 0 0.6vh rgba(255, 255, 255, 1);
 }
 @keyframes blinker {
     50% {
@@ -123,19 +123,18 @@ body.warning #timer {
 }
 body:not(.rolling):not(.paused) #timer { color: #fff; }
 .state-btn {
-	width: calc(8vh + 8vmin);
-    height: 6vh;
-    font-size:calc(2vh + 2vmin);
+	width: 180px;
+    height: 12vh;
+    font-size: 3.3vh;
     margin-bottom: 2vh;
-    box-shadow: 0 1vmax 3vmax rgba(0, 0, 0, 0.5);
-	padding: 1vmax;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+	padding: 1vh;
 	border: 2px solid #333; 
-	border-radius: 1vmax;
+	border-radius: 1vh;
 	cursor: pointer;
 	font-weight: bold;
 	text-align: center;
 	text-transform: uppercase;
-	box-sizing: border-box;
 }
 .btn-green { background: #064506; color: #fff; border-color: #00ff00; }
 .btn-red { background: #610c0c; color: #fff; border-color: #ff0000; }
@@ -158,10 +157,10 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
     display: flex;
     flex-direction: column;
     border: 2px solid #333;
-    border-radius: 2vmax;
-    padding: 2vmax;
-    box-shadow: 0 2vmax 5vmax rgba(0,0,0,0.8);
-	font-size:3vmax;
+    border-radius: 25px;
+    padding: 25px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+	font-size:3vh;
 }
 .config-sidebyside {
 	max-width: 75vh;
@@ -203,10 +202,10 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
 	border:1px solid #444;
 	border-radius:1vh;
 	padding:0.5vh;
-	font-size:calc(1.6vh + 1.6vmin);
+	font-size:3vh;
 }
 #input-level-time {
-	font-size:calc(5vh + 5vmin);
+	font-size:10vh;
 	width: 2.5ch;
 }
 #input-blinds {
@@ -217,7 +216,7 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
     margin: 0.5vh;
     border-radius: 0.5vh;
     font-family: 'Share Tech Mono', monospace;
-    font-size:calc(1.4vh + 1.4vmin);
+    font-size: 2.45vh;
     line-height: 1.2;
     flex-grow: 1; 
     resize: none;
@@ -235,7 +234,7 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
     font-weight: bold;
     cursor: pointer;
     text-transform: uppercase;
-	font-size:calc(1.6vh + 1.6vmin);
+	font-size: 2.5vh;
 }
 .btn-primary { background: #00ff00; color: #000; }
 .btn-secondary { background: #333; color: #ccc; }
@@ -245,7 +244,7 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
     cursor: pointer;
 	border-radius: 50%;
 	background: transparent;
-	font-size:calc(1.6vh + 1.6vmin);
+	font-size: 3.3vh;
 	width: 5vh;
 	height: 5vh;
 	color: #4f4;
@@ -260,23 +259,23 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
 /* PORTRAIT */
 @media (orientation: portrait) {
     #blinds {
-        font-size:calc(8vw + 8vmin);
-		margin-top: 2vh;
+		font-size: calc(8vw + 8vmin);
+        margin-top: 2vh;
     }
 
     #timer {
-        font-size:calc(12vw + 12vmin);
+		font-size: calc(16vw + 16vmin);
     }
 
     #next {
-        font-size:calc(3vw + 3vmin);
+        font-size: 6vw;
         margin-bottom: 1vh;
     }
 
     .state-btn {
         width: 80vw;   /* Make button wider to fit the thumb better */
         height: 8vh;
-        font-size:calc(2vw + 2vmin);
+        font-size: 4vw;
     }
 }
 
