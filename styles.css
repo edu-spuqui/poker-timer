@@ -259,23 +259,23 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
 /* PORTRAIT */
 @media (orientation: portrait) {
     #blinds {
-        font-size: 16vw; /* Switch to width-based */
-        margin-top: 2vh;
+        font-size:calc(8vw + 8vmin);
+		margin-top: 2vh;
     }
 
     #timer {
-        font-size: 32vw; /* Switch to width-based */
+        font-size:calc(16vw + 16vmin);
     }
 
     #next {
-        font-size: 6vw;
+        font-size:calc(3vw + 3vmin);
         margin-bottom: 1vh;
     }
 
     .state-btn {
         width: 80vw;   /* Make button wider to fit the thumb better */
         height: 8vh;
-        font-size: 4vw;
+        font-size:calc(2vw + 2vmin);
     }
 }
 
