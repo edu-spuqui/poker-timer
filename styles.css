@@ -123,10 +123,10 @@ body.warning #timer {
 }
 body:not(.rolling):not(.paused) #timer { color: #fff; }
 .state-btn {
-	width: 180px;
-    height: 12vmax;
-    font-size: 3.3vmax;
-    margin-bottom: 2vmax;
+	width: 24vh;
+    height: 12vh;
+    font-size:calc(2vh + 2vmin);
+    margin-bottom: 2vh;
     box-shadow: 0 1vmax 3vmax rgba(0, 0, 0, 0.5);
 	padding: 1vmax;
 	border: 2px solid #333; 
