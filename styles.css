@@ -48,6 +48,7 @@ body {
 	display: flex;
 	align-items: center;
     cursor: pointer;
+	margin-top: 0.5vh;
 }
 .row {
 	display: flex;
@@ -63,7 +64,7 @@ body {
     border-radius: 2vh;
     width: 10%;
     height: 100%;
-    font-size:	calc(4vw + 4vmin);
+    font-size:	calc(5vw + 5vmin);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -78,10 +79,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgba(255,255,255,0.05);
-    border-radius: 20px;
-    padding: 1vh;
-    width: calc(100% - 2vh);
+    width: 100%;
 }
 .orange-text {
     color: #fa0;
@@ -89,17 +87,35 @@ body {
 #next {
 	font-family: 'SimplySerif';
 	font-size:	calc(3vh + 1.5vmax);
-	color: #999;
+	color: #ddd;
 	font-weight: bold;
 }
 #blinds {
+	min-width: 80vw; 
+	min-height: 35vh;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-evenly;
+}
+#smallblind:empty {	display: none;}
+#smallblind {
 	font-family: 'SimplySerif';
 	font-size:	calc(10vh + 6vmax);
-	color: #fff; 
+	color: #ddd; 
 	line-height: 1; 
-	min-width: 80vw; 
 	text-align: center;
-	text-shadow: 0 0 0.6vh rgba(255, 255, 255, 1);
+	pointer-events: none;
+	text-shadow: 0.6vmax 0.3vmax 0 rgba(240,240,240,0.25);
+}
+#bigblind {
+	font-family: 'SimplySerif';
+	font-size:	calc(10vh + 6vmax);
+	color: #ddd; 
+	line-height: 1; 
+	text-align: center;
+	pointer-events: none;
+	text-shadow: 0.6vmax 0.3vmax 0 rgba(240,240,240,0.25);
 }
 #timer {
 	font-family: 'Digital7Mono', monospace;
@@ -107,8 +123,18 @@ body {
 	line-height: 1; 
 	min-width: 80vw; 
 	text-align: center; /* Center works perfectly with Mono fonts! */
-	color: #fff;
-    text-shadow: 0 0 0.6vh rgba(255, 255, 255, 1);
+	color: #ddd;
+    text-shadow: 0 0 1.2vh rgba(222, 222, 222, 0.9);
+	z-index: 1;
+}
+#timershadow {
+	position: absolute;
+	font-family: 'Digital7Mono', monospace;
+	font-size:	calc(16vh + 10vmax);
+	line-height: 1; 
+	min-width: 80vw; 
+	text-align: center; /* Center works perfectly with Mono fonts! */
+	color: rgba(240, 240, 240, 0.05);
 }
 @keyframes blinker {
     50% {
@@ -123,15 +149,15 @@ body.warning #timer {
 }
 body:not(.rolling):not(.paused) #timer { color: #fff; }
 .state-btn {
-	width: 180px;
+	width: 50vw;
     height: 12vh;
-    font-size: 3.3vh;
     margin-bottom: 2vh;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 	padding: 1vh;
 	border: 2px solid #333; 
 	border-radius: 1vh;
 	cursor: pointer;
+    font-size: 6vh;
 	font-weight: bold;
 	text-align: center;
 	text-transform: uppercase;
@@ -259,14 +285,22 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
 /* PORTRAIT */
 @media (orientation: portrait) {
     #blinds {
-		font-size: calc(8vw + 8vmin);
         margin-top: 2vh;
+		flex-direction: column;
+		gap: 8vh;
     }
-
+	#bigblind {
+		font-size: calc(12vw + 12vmin);
+	}
+	#smallblind {
+		font-size: calc(10vw + 10vmin);
+	}
     #timer {
 		font-size: calc(16vw + 16vmin);
     }
-
+	#timershadow {
+		font-size: calc(16vw + 16vmin);
+	}
     #next {
         font-size: 6vw;
         margin-bottom: 1vh;
@@ -276,6 +310,7 @@ body:not(.rolling):not(.paused) #timer { color: #fff; }
         width: 80vw;   /* Make button wider to fit the thumb better */
         height: 8vh;
         font-size: 4vw;
+		margin-bottom: 2vh;
     }
 }
 

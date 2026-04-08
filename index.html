@@ -7,7 +7,6 @@
 	<link rel="icon" type="image/png" href="icon.png">
 	<link rel="shortcut icon" href="icon.png">
     <link rel="stylesheet" href="styles.css?v=1.1">
-	<link href="https://fonts.googleapis.com/css2?family=Teko&display=swap" rel="stylesheet">
 	<style>
     </style>
 </head>
@@ -15,14 +14,20 @@
 	
     <div id="topBar">
 		<span id="wall-clock">00:00:00</span>
+		<div id="next">Próximo nível: -- / --</div>
+		<span id="battery-status" style="font-size: 4vh;">
+			🔋 <span id="battery-level">--%</span>
+		</span>
 		<button id="config-btn" onclick="showConfig()">⋮</button>
     </div>
 
-	<div class="control-block" style="margin-top:1vh;">
-		<div id="next">Próximo nível: -- / --</div>
+	<div class="control-block">
 		<div class="row">
 			<button class="adj-btn" onclick="changeLevel(-1)">◀</button>
-			<div id="blinds">-- | --</div>
+			<div id="blinds">
+				<div id="smallblind"> -- </div>
+				<div id="bigblind"> -- </div>
+			</div>
 			<button class="adj-btn" id="btn-next-level" onclick="changeLevel(1)">▶</button>
 		</div>
 	</div>
@@ -30,6 +35,7 @@
 	<div class="control-block">
 		<div class="row">
 			<button class="adj-btn" onclick="adjustTime(-30)">◀</button>
+			<div id="timershadow" class="timershadow">00:00</div>
 			<div id="timer" class="timer">12:00</div>
 			<button class="adj-btn" onclick="adjustTime(30)">▶</button>
 		</div>

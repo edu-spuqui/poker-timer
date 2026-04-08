@@ -6,6 +6,7 @@ const PRESETS = {
 };
 
 let isStarted = false;
+let isRolling = false;
 let wakeLock = null;
 let currentLevels = []; 
 let currentLevel = 0;
@@ -14,6 +15,8 @@ let timeLeft = 12 * 60;
 let timerId = null;
 let adjustmentWindowTimeout = null;
 let showNextLevelOnly = false;
+let lastSaveTime = 0;
+let batteryAlertTriggered = false;
 
 // Main UI
 function updateDisplay() {
@@ -24,8 +27,17 @@ function updateDisplay() {
     document.getElementById('timer').innerText = `${mins}:${secs.toString().padStart(2, '0')}`;
     
     // Main Blinds Display
-    document.getElementById('blinds').innerText = current.displayValue;
-    document.getElementById('blinds').style.color = current.isBreak ? "#fa0" : "#fff";
+	if (current.isBreak) {
+		document.getElementById('bigblind').innerText = current.displayValue;
+		document.getElementById('bigblind').style.color = current.isBreak ? "#fa0" : "#fff";
+		document.getElementById('bigblind').style.fontSize = "calc(8vw + 8vmin)";
+		document.getElementById('smallblind').innerText = "";
+	} else {
+		document.getElementById('bigblind').innerText = current.displayBB;
+		document.getElementById('bigblind').style.color = current.isBreak ? "#fa0" : "#fff";
+		document.getElementById('bigblind').style.fontSize = "calc(12vw + 12vmin)";
+		document.getElementById('smallblind').innerText = current.displaySB;
+	}
     
     // "Next Level" Logic
     const next = currentLevels[currentLevel + 1];
@@ -59,6 +71,8 @@ function updateDisplay() {
         }
     });
     if (timeLeft <= 10) document.body.classList.add('warning');
+	if (timeLeft < 600) document.getElementById('timershadow').innerText = "0:00";
+	else document.getElementById('timershadow').innerText = "00:00";
 }
 function changeLevel(direction) {
     if (currentLevels.length === 0) return;
@@ -71,6 +85,7 @@ function changeLevel(direction) {
 	timeLeft = currentLevels[currentLevel].duration;
     
     updateDisplay();
+	saveCurrentProgress();
 }
 function toggleTimer() {
     if (currentLevels.length === 0) {
@@ -88,13 +103,15 @@ function toggleTimer() {
         btn.className = "state-btn btn-red";
         body.classList.remove('rolling');
         body.classList.add('paused');
+		isRolling = false;
+		saveCurrentProgress();
     } else {
 		// Starting or Retuming
         if (!isStarted) {
             isStarted = true;
             requestWakeLock();
+			localStorage.removeItem('pokerGameState');
         }        
-		
 		openAdjustmentWindow();
 		
 		btn.innerHTML = "Jogo Rolando";
@@ -102,14 +119,18 @@ function toggleTimer() {
         body.classList.add('rolling');
         body.classList.remove('paused');
         timerId = setInterval(() => {
-            if (timeLeft === 6) playAlarm();
+            if (timeLeft === 7) playAlarm();
             if (timeLeft <= 0) {
                 changeLevel(1);
+				saveCurrentProgress();
             } else {
                 timeLeft--;
+				if (timeLeft % 10 === 0) { saveCurrentProgress(); }
             }
             updateDisplay();
         }, 1000);
+		isRolling = true;
+		saveCurrentProgress();
     }
 }
 function openAdjustmentWindow() {
@@ -185,7 +206,8 @@ function applyConfig(data) {
     levelDuration = data.levelTime * 60;
     currentLevel = 0;
     timeLeft = currentLevels[0].duration; // Use the first level's duration
-
+	
+	
     syncFormWithConfig(data);
     updateDisplay();
     hideConfig();
@@ -221,6 +243,8 @@ function getLevelData(line) {
         const bbDisplay = formatShorthand(bigBlindNum);
 
         return { 
+            displaySB: `${sbDisplay}`, 
+            displayBB: `${bbDisplay}`, 
             displayValue: `${sbDisplay} | ${bbDisplay}`, 
             duration: duration,
             isBreak: false
@@ -244,9 +268,45 @@ function adjustTime(seconds) {
     timeLeft += seconds;
     if (timeLeft < 0) timeLeft = 0;
     updateDisplay();
+	saveCurrentProgress();
+}
+function saveCurrentProgress() {
+    const progress = {
+        currentLevel: currentLevel,
+        timeLeft: timeLeft,
+        isStarted: isStarted,
+        isRolling: isRolling,
+        timestamp: Date.now() // To know how "old" the recovery data is
+    };
+    localStorage.setItem('pokerGameState', JSON.stringify(progress));
 }
 
 // System/Init
+function checkBattery(battery) {
+    const level = Math.round(battery.level * 100);
+    const meter = document.getElementById('battery-level');
+    
+    if (meter) {
+        meter.innerText = `${level}%`;
+        meter.style.color = level <= 15 ? '#f00' : '#0f0'; // Red if low
+    }
+
+    // Alert logic: 10% threshold
+    if (level <= 10 && !battery.charging && !batteryAlertTriggered) {
+        issueBatteryWarning(level);
+        batteryAlertTriggered = true; 
+    } else if (level > 10 || battery.charging) {
+        batteryAlertTriggered = false; // Reset if plugged in or charged
+    }
+}
+function issueBatteryWarning(level) {
+    // 1. Visual Alert
+    alert(`⚠️ BATERIA FRACA: ${level}%! Conecte o carregador agora.`);
+    
+    // 2. Audible Alert
+    // We reuse your boosted alarm sound
+    playAlarm(); 
+}
 function startWallClock() {
     setInterval(() => {
         const now = new Date();
@@ -305,6 +365,34 @@ async function init() {
             console.error("Erro ao carregar o preset padrão:", err);
         }
     }
+	
+	const savedProgress = localStorage.getItem('pokerGameState');
+    if (savedProgress) {
+        const progress = JSON.parse(savedProgress);
+        
+        // Restore the values
+        currentLevel = progress.currentLevel;
+        timeLeft = progress.timeLeft;
+        
+		// If it was running when it died/refreshed, start it back up!
+		if (progress.isRolling) {
+			isRolling = true;
+			toggleTimer(); 
+		}
+		
+        updateDisplay();
+        console.log("Game state recovered to level " + currentLevel);
+    }
+	
+	if ('getBattery' in navigator) {
+		navigator.getBattery().then(battery => {
+			checkBattery(battery);
+
+			// Listen for changes
+			battery.addEventListener('levelchange', () => checkBattery(battery));
+			battery.addEventListener('chargingchange', () => checkBattery(battery));
+		});
+	}
 }
 
 init();
