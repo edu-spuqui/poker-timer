@@ -6,7 +6,7 @@
     <title>Poker Timer • PT-BR</title>
 	<link rel="icon" type="image/png" href="icon.png">
 	<link rel="shortcut icon" href="icon.png">
-    <link rel="stylesheet" href="styles.css?v=1.2">
+    <link rel="stylesheet" href="styles.css?v=1.3">
 	<style>
     </style>
 </head>
@@ -14,12 +14,15 @@
 	
     <div id="topBar">
 		<span id="wall-clock">00:00:00</span>
-		<div id="next">Próximo nível: -- / --</div>
-		<span id="battery-status" style="font-size: 4vh;">
-			🔋 <span id="battery-level">--%</span>
+		<span class="topRightCorner">
+			<span id="battery-status">
+				<span id="battery-level">--%</span>🔋
+			</span>
+			<button id="config-btn" onclick="showConfig()">⋮</button>
 		</span>
-		<button id="config-btn" onclick="showConfig()">⋮</button>
     </div>
+
+	<div id="next">Próximo nível: -- / --</div>
 
 	<div class="control-block">
 		<div class="row">
@@ -34,10 +37,10 @@
 
 	<div class="control-block">
 		<div class="row">
-			<button class="adj-btn" onclick="adjustTime(-30)">◀</button>
+			<button class="adj-btn" onclick="adjustTime(-60)">◀</button>
 			<div id="timershadow" class="timershadow">00:00</div>
 			<div id="timer" class="timer">12:00</div>
-			<button class="adj-btn" onclick="adjustTime(30)">▶</button>
+			<button class="adj-btn" onclick="adjustTime(60)">▶</button>
 		</div>
 	</div>
 	
@@ -75,6 +78,6 @@
     </div>
 </div>
 
-<script src="scripts.js?v=1.1" type="text/javascript"></script>
+<script src="scripts.js?v=1.3" type="text/javascript"></script>
 </body>
 </html>

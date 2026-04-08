@@ -36,7 +36,21 @@ body {
 #wall-clock {
 	font-family: 'Digital7Mono', monospace;
 	font-size: calc(2vh + 2vmax);
-	color: #999;
+	color: #ddd;
+	pointer-events: none;
+}
+.topRightCorner {
+	min-width:16vw;
+	display:flex;
+	justify-content:space-between;
+}
+#battery-status {
+	font-size: calc(1.6vh + 1.6vmax);
+	pointer-events: none;
+}
+#battery-level {
+    font-family: 'Digital7Mono', monospace;
+    font-size: calc(2vh + 2vmax);
 }
 #config-btn {
     background: transparent;
@@ -47,6 +61,7 @@ body {
 	height:		calc(2vh + 2vmax);
 	display: flex;
 	align-items: center;
+	justify-content: center;
     cursor: pointer;
 	margin-top: 0.5vh;
 }
